@@ -1,4 +1,4 @@
-/* abc
+/*
  * MORSE CODE:
  * Each Morse code symbol is formed by a sequence of dots and dashes. 
  * 
