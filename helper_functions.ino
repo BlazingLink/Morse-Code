@@ -25,7 +25,7 @@
         findIndexOf("three", myArray); --> 2
         findIndexOf("four", myArray); --> -1
 */
-int findIndexOf(char elem[], char myArray[][6], int array_size) {
+int findIndexOf(String elem, String myArray[], int array_size) {
 
 
   int i = 0;
@@ -36,9 +36,9 @@ int findIndexOf(char elem[], char myArray[][6], int array_size) {
 
     // Serial.println(myArray[i][0]);
 
-    for (int j = 0; j <= strlen(elem); j++) {
+    for (int j = 0; j <= elem.length(); j++) {
 
-      if (myArray[i][j] == elem[j]) {
+      if (myArray[i].charAt(j) == elem.charAt(j)) {
 
         count ++;
 
@@ -47,7 +47,7 @@ int findIndexOf(char elem[], char myArray[][6], int array_size) {
 
     //Serial.println(count);
 
-    if (count == strlen(elem) + 1) {
+    if (count == elem.length() + 1) {
 
       return i;
 
@@ -93,7 +93,7 @@ String charToPattern(char character) {
    Transforms a Morse code pattern into the corresponding character.
    e.g. patternToChar(".-"); --> 'a'
 */
-char patternToChar(char pattern[]) {
+char patternToChar(String pattern) {
   // Your code here!
   int charPosition = findIndexOf(pattern, patterns, SIZE);
   return characters[charPosition];

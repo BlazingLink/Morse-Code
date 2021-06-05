@@ -2,18 +2,22 @@ enum states {
   START, DOT, DASH, NEXT, END
 };
 
+String currentLetter, english;
 
 void decode() {
+  Serial.println("decode open.");
   int state = START, pos = 0;
   unsigned long time;
   String morseCode;
   while (true) {
+    /*
     Serial.print("state = ");
     Serial.println(state);
     Serial.print("time = ");
     Serial.println(time);
     Serial.print("morseCode = ");
     Serial.println(morseCode);
+    */
     switch(state) {
       case START:
         // Do stuff.
@@ -21,25 +25,58 @@ void decode() {
         if(digitalRead(BUTTONPIN) == HIGH) {
           state = DOT;
           time = millis();
+          Serial.print("english = ");
+          Serial.println(english);
+          Serial.print("state = ");
+          Serial.println(state);
+          Serial.print("time = ");
+          Serial.println(time);
+          Serial.print("morseCode = ");
+          Serial.println(morseCode);
         }
         break;
         
       case DOT:
         // Do stuff.
-        if(digitalRead(BUTTONPIN) == HIGH) {
+        if(digitalRead(BUTTONPIN)) {
           if((millis() - time) >= (TIME_UNIT * 3)) {
             state = DASH;
+            Serial.print("english = ");
+            Serial.println(english);
+            Serial.print("state = ");
+            Serial.println(state);
+            Serial.print("time = ");
+            Serial.println(time);
+            Serial.print("morseCode = ");
+            Serial.println(morseCode);
             break;
           }
         }
-        else if(digitalRead(BUTTONPIN) == LOW) {
+        else if(!(digitalRead(BUTTONPIN))) {
           if((millis() - time) >= TIME_UNIT) {
             state = NEXT;
             time = millis();
-            morseCode += ".";
+            morseCode += '.';
+            currentLetter += '.';
+            Serial.print("english = ");
+            Serial.println(english);
+            Serial.print("state = ");
+            Serial.println(state);
+            Serial.print("time = ");
+            Serial.println(time);
+            Serial.print("morseCode = ");
+            Serial.println(morseCode);
           }
           else {
             state = START;
+            Serial.print("english = ");
+            Serial.println(english);
+            Serial.print("state = ");
+            Serial.println(state);
+            Serial.print("time = ");
+            Serial.println(time);
+            Serial.print("morseCode = ");
+            Serial.println(morseCode);
           }
         }
         // Transition rules.
@@ -47,16 +84,34 @@ void decode() {
   
       case DASH:
         // Do stuff.
-        if(digitalRead(BUTTONPIN) == HIGH) {
-          if(millis() - time >= (TIME_UNIT * 6)) {
+        if(digitalRead(BUTTONPIN)) {
+          if((millis() - time) >= (TIME_UNIT * 6)) {
             state = END;
+            Serial.print("english = ");
+            Serial.println(english);
+            Serial.print("state = ");
+            Serial.println(state);
+            Serial.print("time = ");
+            Serial.println(time);
+            Serial.print("morseCode = ");
+            Serial.println(morseCode);
 
-            break;
           }
         }
-        state = NEXT;
-        morseCode += "-";
-        time = millis();
+        else {
+          state = NEXT;
+          morseCode += '-';
+          currentLetter += '-';
+          time = millis();
+          Serial.print("english = ");
+          Serial.println(english);
+          Serial.print("state = ");
+          Serial.println(state);
+          Serial.print("time = ");
+          Serial.println(time);
+          Serial.print("morseCode = ");
+          Serial.println(morseCode);
+        }  
         
           // Transition rules.
         break;
@@ -64,18 +119,46 @@ void decode() {
       case NEXT:
         // Do stuff.
         // Between dot and dash for next character
-        if(digitalRead(BUTTONPIN)) {
+        if(digitalRead(BUTTONPIN)) { // Whenever the program gets here, the button must be depressed.
           
-          if((millis() - time) >= (TIME_UNIT * 3)) {
-            morseCode += "|";
+          if((millis() - time) >= (TIME_UNIT * 7)) { // End of word.
+            morseCode += "|"; 
+            english += patternToChar(currentLetter);
+            english += ' ';
+            Serial.print("english = ");
+            Serial.println(english);
+            Serial.print("state = ");
+            Serial.println(state);
+            Serial.print("time = ");
+            Serial.println(time);
+            Serial.print("morseCode = ");
+            Serial.println(morseCode);            
           }
           
-          else if((millis() - time) >= TIME_UNIT) {
+          else if((millis() - time) >= (TIME_UNIT * 3)) { // End of letter.
             morseCode += " ";
+            english += patternToChar(currentLetter);
+            currentLetter = "";
+            Serial.print("english = ");
+            Serial.println(english);
+            Serial.print("state = ");
+            Serial.println(state);
+            Serial.print("time = ");
+            Serial.println(time);
+            Serial.print("morseCode = ");
+            Serial.println(morseCode);
           }
 
           state = DOT;
-          time = millis();          
+          time = millis();   
+          Serial.print("english = ");
+          Serial.println(english);
+          Serial.print("state = ");
+          Serial.println(state);
+          Serial.print("time = ");
+          Serial.println(time);
+          Serial.print("morseCode = ");
+          Serial.println(morseCode);       
           
         }
 

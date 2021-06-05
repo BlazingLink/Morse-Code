@@ -17,7 +17,7 @@
  */
 const int SIZE = 36, BUTTONPIN = 2;
 char characters[] = "abcdefghijklmnopqrstuvwxyz1234567890";
-char patterns[] [6] = {".-", "-...", "-.-.", "-..", ".", 
+String patterns[] = {".-", "-...", "-.-.", "-..", ".", 
                      "..-.", "--.", "....", "..", ".---", 
                      "-.-", ".-..", "--", "-.", "---",
                      ".--.", "--.-", ".-.", "...", "-",
