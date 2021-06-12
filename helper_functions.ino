@@ -55,6 +55,7 @@ int findIndexOf(String elem, String myArray[], int array_size) {
 
   }
 
+  Serial.println("Nonexistent pattern!!");
   return -1;
 }
 
@@ -74,6 +75,7 @@ int findIndexOf(char elem, char myArray[], int arraySize) {
       return i;
     }
   }
+  Serial.println("Nonexistent pattern!!");
   return -1;
 }
 
@@ -96,6 +98,9 @@ String charToPattern(char character) {
 char patternToChar(String pattern) {
   // Your code here!
   int charPosition = findIndexOf(pattern, patterns, SIZE);
+  if(charPosition == -1) {
+    return "";
+  }
   return characters[charPosition];
 }
 
@@ -158,4 +163,15 @@ void encode() {
     }
     wordToLED(mySentence); 
   }
+}
+
+void decodePrint(String english, int state, unsigned long time, String morseCode) { // Print all of the variables in decode() to the Serial Monitor.
+  Serial.print("english = ");
+  Serial.println(english);
+  Serial.print("state = ");
+  Serial.println(state);
+  Serial.print("time = ");
+  Serial.println(time);
+  Serial.print("morseCode = ");
+  Serial.println(morseCode);
 }

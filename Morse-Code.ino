@@ -25,7 +25,7 @@ String patterns[] = {".-", "-...", "-.-.", "-..", ".",
                      "--..", ".----", "..---", "...--", "....-",
                      ".....", "-....", "--...", "---..", "----.",
                      "-----"};
-const int TIME_UNIT = 2000; // A dot lasts 0.5 seconds.
+const int TIME_UNIT = 1000; // A dot lasts 1.0 seconds (1000 millis).
 
 
 void setup() {
